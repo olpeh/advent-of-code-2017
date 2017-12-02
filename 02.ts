@@ -27,8 +27,10 @@ const getDifferenceForRow = row => {
   return getMax(integers) - getMin(integers);
 };
 
+const getRows = input => input.split('\n').map(r => r.trim());
+
 const calculate = input => {
-  const rows = input.split('\n').map(r => r.trim());
+  const rows = getRows(input);
   return rows.map(getDifferenceForRow).reduce((a, b) => a + b, 0);
 };
 
@@ -50,3 +52,47 @@ const input: string = `116 1259 1045 679 1334 157 277 1217 218 641 1089 136 247 
 919 615 335 816 138 97 881 790 855 89 451 789 423 108 95 116`;
 
 console.log(calculate(input)); // 41887
+
+// --- Part Two ---
+
+// "Great work; looks like we're on the right track after all. Here's a star for your effort." However, the program seems a little worried. Can programs be worried?
+
+// "Based on what we're seeing, it looks like all the User wanted is some information about the evenly divisible values in the spreadsheet. Unfortunately, none of us are equipped for that kind of calculation - most of us specialize in bitwise operations."
+
+// It sounds like the goal is to find the only two numbers in each row where one evenly divides the other - that is, where the result of the division operation is a whole number. They would like you to find those numbers on each line, divide them, and add up each line's result.
+
+// For example, given the following spreadsheet:
+
+// 5 9 2 8
+// 9 4 7 3
+// 3 8 6 5
+
+//     In the first row, the only two numbers that evenly divide are 8 and 2; the result of this division is 4.
+//     In the second row, the two numbers are 9 and 3; the result is 3.
+//     In the third row, the result is 2.
+
+// In this example, the sum of the results would be 4 + 3 + 2 = 9.
+
+// What is the sum of each row's result in your puzzle input?
+
+const getEvenDivisionForRow = row => {
+  const integers = row.split(' ').map(str => parseInt(str));
+  let divisionForRow = 0;
+  integers.forEach(a => {
+    integers.forEach(b => {
+      if (a !== b && a % b === 0) {
+        divisionForRow = a / b;
+      } else if (a !== b && b % a === 0) {
+        divisionForRow = b / a;
+      }
+    });
+  });
+  return divisionForRow;
+};
+
+const calculateDivision = input => {
+  const rows = getRows(input);
+  return rows.map(getEvenDivisionForRow).reduce((a, b) => a + b, 0);
+};
+
+console.log(calculateDivision(input)); // 226
