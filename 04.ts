@@ -557,3 +557,22 @@ console.log(countValid(input)); // 466
 //     oiii ioii iioi iiio is not valid - any of these words can be rearranged to form any other word.
 
 // Under this new system policy, how many passphrases are valid?
+
+const getCharacters = input => input.split('');
+
+const countValidPart2 = input =>
+  getPassPhrases(input).reduce((accumulator, phrase) => {
+    const words = getWords(phrase);
+    const uniqueStringCombinations = new Set(
+      words.map(word =>
+        getCharacters(word)
+          .sort()
+          .join('')
+      )
+    );
+    return uniqueStringCombinations.size === words.length
+      ? accumulator + 1
+      : accumulator;
+  }, 0);
+
+console.log(countValidPart2(input)); // 251
