@@ -57,7 +57,8 @@ const calculate = input => {
   return step;
 };
 
-console.log(calculate(input)); // 359348
+const part1input = JSON.parse(JSON.stringify(input));
+console.log(calculate(part1input)); // 359348
 
 // --- Part Two ---
 
@@ -82,4 +83,5 @@ const calculatePart2 = input => {
   return step;
 };
 
-console.log(calculatePart2(input)); // 513
+const part2input = JSON.parse(JSON.stringify(input));
+console.log(calculatePart2(part2input)); // 27688760
