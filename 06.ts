@@ -75,10 +75,31 @@ const countCycles = (input: number[]) => {
     cycleCount++;
   } while (!hasBeenSeen(history, state));
 
-  return cycleCount;
+  return { cycleCount, state: state };
 };
 
 const testInput = [0, 2, 7, 0],
   input = [2, 8, 8, 5, 4, 2, 3, 1, 5, 5, 1, 2, 15, 13, 5, 14];
-console.log(countCycles(testInput)); // 5
-console.log(countCycles(input)); // 3156
+console.log(countCycles(testInput).cycleCount); // 5
+console.log(countCycles(input).cycleCount); // 3156
+
+// --- Part Two ---
+
+// Out of curiosity, the debugger would also like to know the size of the loop:
+// starting from a state that has already been seen, how many block
+// redistribution cycles must be performed before that same state is seen again?
+
+// In the example above, 2 4 1 2 is seen again after four cycles, and so the
+// answer in that example would be 4.
+
+// How many cycles are in the infinite loop that arises from the configuration
+// in your puzzle input?
+
+// Although it hasn't changed, you can still get your puzzle input.
+
+const round1 = countCycles(input),
+  round2 = countCycles(round1.state),
+  round3 = countCycles(round2.state);
+
+console.log(round2.cycleCount); // 1610
+console.log(round3.cycleCount); // 1610
